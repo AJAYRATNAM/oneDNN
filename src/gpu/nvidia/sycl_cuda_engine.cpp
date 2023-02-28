@@ -37,8 +37,8 @@
 #include "gpu/nvidia/sycl_cuda_engine.hpp"
 #include "gpu/nvidia/sycl_cuda_scoped_context.hpp"
 #include "gpu/nvidia/sycl_cuda_stream.hpp"
-
 #include "gpu/sycl/ref_binary.hpp"
+#include "gpu/sycl/ref_layer_normalizations.hpp"
 
 namespace dnnl {
 namespace impl {
@@ -238,6 +238,10 @@ constexpr dnnl::impl::impl_list_item_t sycl_cuda_impl_list[] = {
         // Binary
         INSTANCE(cudnn_binary_t)
         INSTANCE(sycl::ref_binary_t)
+
+        //layer norm
+        INSTANCE(sycl::ref_layer_normalization_fwd_t)
+        INSTANCE(sycl::ref_layer_normalization_bwd_t)
 
         // MatMul
         INSTANCE(cudnn_matmul_t)

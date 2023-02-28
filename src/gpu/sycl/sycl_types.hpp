@@ -133,6 +133,14 @@ struct sycl_md_t {
 #undef CHECK_AND_ASSIGN
     }
 
+    template <typename... Args>
+    dim_t off(Args... args) const {
+        //printf("inside off\n");
+        assert(sizeof...(args) == ndims());
+        dims_t pos = {args...};
+        return off_v(pos, false);
+    }
+
     dim_t off_v(const dims_t pos, bool is_pos_padded = false) const {
         dims_t pos_copy = {0};
         for (int d = 0; d < ndims(); ++d)
