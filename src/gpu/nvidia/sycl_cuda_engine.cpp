@@ -37,8 +37,8 @@
 #include "gpu/nvidia/sycl_cuda_engine.hpp"
 #include "gpu/nvidia/sycl_cuda_scoped_context.hpp"
 #include "gpu/nvidia/sycl_cuda_stream.hpp"
-#include "gpu/sycl/ref_prelu.hpp"
 #include "gpu/sycl/ref_binary.hpp"
+#include "gpu/sycl/ref_prelu.hpp"
 
 namespace dnnl {
 namespace impl {
@@ -216,6 +216,7 @@ constexpr dnnl::impl::impl_list_item_t sycl_cuda_impl_list[] = {
         INSTANCE(cudnn_batch_normalization_bwd_t)
 
         //prelu
+        INSTANCE(sycl::ref_prelu_fwd_t)
         INSTANCE(sycl::ref_prelu_bwd_t)
 
         // Pooling
