@@ -20,6 +20,9 @@
 #include "gpu/sycl/sycl_post_ops.hpp"
 #include "gpu/sycl/sycl_types.hpp"
 
+#include "common/broadcast_strategy.hpp"
+#define MAX_NDIMS 6
+
 namespace dnnl {
 namespace impl {
 namespace gpu {
@@ -43,6 +46,70 @@ struct sycl_binary_conf_t {
     sycl_post_ops_t post_ops;
 };
 
+
+struct sycl_prelu_conf_t {
+    prop_kind_t prop_kind;
+    sycl_md_t data_md;
+    sycl_md_t dst_md;
+    sycl_md_t weights_md;
+    sycl_md_t diff_data_md;
+    sycl_md_t diff_dst_md;
+    sycl_md_t diff_weights_md;
+    dim_t work_amount;
+    dim_t work_amount_wei;
+    dim_t work_amount_src;
+    dim_t work_load;
+    bool reduce_diff_weights=0;
+    int mask;
+    float sum;
+    broadcasting_strategy_t bcast_type;
+    int ndims;
+    int block_size;
+    int wg_size;
+    size_t n_thr;
+    size_t i_thr;
+};
+struct sycl_batch_normalization_conf_t {
+    prop_kind_t prop_kind;
+    int ndims;
+    size_t n_thr;
+    unsigned flags;
+    size_t wk_size;
+    int block_size;
+    int wg_size;
+    bool use_scale;
+    bool use_shift;
+    float alpha;
+    bool dir;
+    sycl_md_t data_md;
+    sycl_md_t src1_md;
+    sycl_md_t dst1_md;
+    sycl_md_t diff_data_md;
+    sycl_md_t diff_src1_md;
+    sycl_md_t data_scaleshift_md;
+    sycl_md_t diff_data_scaleshift_md;
+    sycl_md_t stat_md;
+    sycl_md_t var_md;
+    sycl_md_t ws_md;
+    sycl_md_t dst_md; 
+    sycl_md_t diff_dst_md;
+    dim_t N;
+    dim_t C;
+    dim_t D;
+    dim_t H;
+    dim_t W;
+    float batch_norm_epsilon;
+    bool save_stats;
+    bool calculate_stats;
+    bool calculate_diff_stats;
+    bool fuse_norm_relu;
+    bool fuse_norm_add_relu;
+    bool zero_dims;
+    bool is_training;
+    bool with_relu;
+};
+
+CHECK_SYCL_KERNEL_ARG_TYPE(sycl_prelu_conf_t);
 CHECK_SYCL_KERNEL_ARG_TYPE(sycl_binary_conf_t);
 
 } // namespace sycl
